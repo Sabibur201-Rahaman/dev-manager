@@ -1,0 +1,8 @@
+.brand{
+  font-family: lobstar,cursive,monospace
+}
+.card-pic{
+  max-width: 250px;
+  padding:1.5rem;
+  height:auto;
+}
