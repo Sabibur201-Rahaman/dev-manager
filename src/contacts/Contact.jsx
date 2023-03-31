@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import{Card,ListGroup,Button} from 'react-bootstrap'
 import{FaEye,FaRegTrashAlt}from 'react-icons/fa'
 function Contact({contact,deleteContacts}) {
+  console.log(contact)
     const{first_name,last_name,profession,dob,email,picture,gender,bio}=contact
   return (
     <>
@@ -10,7 +11,8 @@ function Contact({contact,deleteContacts}) {
               <div className='d-flex'>
               <Card.Img  className='card-pic' src={picture} />
               <Card.Body>
-                <Card.Title><span className='text-dark'>{first_name}   {last_name}</span></Card.Title>
+                <Card.Title><span className='text-dark'>{first_name}</span></Card.Title>
+                <Card.Title><span className='text-dark'>{last_name}</span></Card.Title>
                 <Card.Title>{profession}</Card.Title>
                 <Card.Text>
                   {bio}

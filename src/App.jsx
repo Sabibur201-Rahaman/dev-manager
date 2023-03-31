@@ -5,6 +5,7 @@ import './App.css'
 import Contacts from './contacts/Contacts'
 import Header from './layouts/Header'
 import AddContacts from './contacts/AddContacts'
+import { v4 as uuidv4 } from 'uuid'
 const initialState=[
   {
     "id": 1,
@@ -88,15 +89,22 @@ const initialState=[
 function App() {
   const [contacts, setContacts] = useState(initialState)
 const deleteContacts=(id)=>{
+  console.log(id)
   const updatedContacts=contacts.filter(contact=> contact.id!==id)
   setContacts(updatedContacts)
-  console.log(id)
+}
+const addContacts=contact=>{
+let addToContacts={
+  id:uuidv4(),
+  ...contact,
+}
+setContacts([addToContacts,...contacts])
 }
   return (
     <>
     <container style={{width:'800px',margin:'0 auto'}} >
     <Header/>
-    <AddContacts/>
+    <AddContacts addContacts={addContacts}/>
     <Contacts contacts={contacts} deleteContacts={deleteContacts}/>
     </container>
     </>
