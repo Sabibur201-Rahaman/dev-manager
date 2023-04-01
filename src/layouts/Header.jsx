@@ -1,11 +1,12 @@
 import React from 'react'
 import{Nav,Navbar,Button,Container,Form} from 'react-bootstrap'
+import { Link, NavLink } from 'react-router-dom'
 function Header() {
   return (
     <div className='container' >
        <Navbar bg="light" expand="lg" fixed='top'>
       <Container>
-        <Navbar.Brand href="#" className='brand'>Dev-manager</Navbar.Brand>
+        <Navbar.Brand as={Link} to='/'>Dev-manager</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -13,8 +14,12 @@ function Header() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Contacts</Nav.Link>
-            <Nav.Link href="#action2">Register</Nav.Link>
+            <Nav.Link as={NavLink} to='/contacts'>Contacts</Nav.Link>
+            <Nav.Link as ={NavLink} to='/add-contacts'>AddContacts</Nav.Link>
+            <Nav.Link as ={NavLink} to='/Login'>Login</Nav.Link>
+            <Nav.Link as ={NavLink} to='/Register'>Register</Nav.Link>
+            
+            
             {/* <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -25,9 +30,9 @@ function Header() {
                 Something else here
               </NavDropdown.Item>
             </NavDropdown> */}
-            <Nav.Link href="#" disabled>
+            {/* <Nav.Link href="#" disabled>
              Login
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
           <Form className="d-flex">
             <Form.Control

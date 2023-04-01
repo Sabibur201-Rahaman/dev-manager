@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {useForm} from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-
+import {toast} from 'react-toastify'
 const schema=yup.object({
   first_name:yup
   .string()
@@ -40,7 +40,8 @@ gender:yup
 .required()
 .oneOf(['male','female'])
 })
-    function AddContacts({addContacts}) {
+ function AddContacts({addContacts,updateContact,contact1}) {
+  console.log(contact1)
       const[contact,setContact]=useState({
         first_name:'',
         last_name:'',
@@ -61,6 +62,16 @@ gender:yup
           [evt.target.name]:evt.target.value
         })
       }
+      const defaultValue={
+        first_name:contact1?.first_name||'sabibur',
+        last_name:contact1?.last_name||'Rahaman',
+        profesion:contact1?.profesion||'developer',
+        email:contact1?.email||'sabiburrahaman720@gmail.com',
+        bio:contact1?.bio||'helllo i am from developing stream',
+        picture:contact1?.picture||'https://randomuser.me/api/portraits/men/1.jpg',
+        gender:contact1?.gender||'male'
+      }
+      const{first_name,last_name,bio,gender,email,profession,picture,}=defaultValue
       useEffect(()=>{
         reset({
           first_name:'',
@@ -80,6 +91,7 @@ gender:yup
     
   // const{first_name,last_name,profession,gender,dob,bio,email,picture}=contact
   const onSubmit=(data)=>{
+    toast.success('contact successfully added')
     addContacts(data)
 // console.log(data)
   }
@@ -95,9 +107,9 @@ gender:yup
           <Form.Control
           input type='text'
           id='first_name'
-          defaultValue=''
+          defaultValue={first_name}
           {...register('first_name')}
-          isInValid={errors?.first_name}
+          isinValid={errors?.first_name}
           placeholder='Enter your firstname'
          />
           <Form.Control.Feedback type='invalid'className='d-block'>
@@ -114,9 +126,9 @@ gender:yup
           <Form.Control
           input type='text'
           id='last_name'
-          defaultValue=''
+          defaultValue={last_name}
           {...register('last_name')}
-          isInValid={errors?.last_name}
+          isinValid={errors?.last_name}
           placeholder='Enter your LastName'
          />
           <Form.Control.Feedback type='invalid'className='d-block'>
@@ -130,7 +142,9 @@ gender:yup
           </Col>
           <Col sm={9}>
           <Form.Select {...register('profession')}aria-label="select your profession">
-          isInValid={errors?.profession}
+            id:'profession'
+            defaultValue:{profession}
+          isinValid={errors?.profession}
       <option value ='' disabled> select your profession</option>
       <option value="Developer">developer</option>
       <option value="Designer">designer</option>
@@ -150,9 +164,9 @@ gender:yup
           <Form.Control
           input type='text'
           id='email'
-          defaultValue=''
+          defaultValue={email}
           {...register('email')}
-          isInValid={errors?.email}
+          isinValid={errors?.email}
           placeholder='Enter your email'
          />
           <Form.Control.Feedback type='invalid'className='d-block'>
@@ -222,9 +236,9 @@ gender:yup
           <Form.Control
           input type='text'
           id='bio'
-          defaultValue=''
+          defaultValue={bio}
           {...register('bio')}
-          isInValid={errors?.bio}
+          isinValid={errors?.bio}
           placeholder='Enter your bio'
          />
           <Form.Control.Feedback type='invalid'className='d-block'>
@@ -240,9 +254,9 @@ gender:yup
           <Form.Control
           input type='text'
           id='picture'
-          defaultValue=''
+          defaultValue={picture}
           {...register('picture')}
-          isInValid={errors?.picture}
+          isinValid={errors?.picture}
           placeholder='Enter your picture url'
          />
           <Form.Control.Feedback type='invalid'className='d-block'>
