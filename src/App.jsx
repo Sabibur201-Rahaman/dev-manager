@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -14,6 +14,9 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import EditContact from './pages/EditContact'
 import AddContact from './pages/AddContact'
+import ContactDetails from './pages/ContactDetails'
+import { Container } from 'react-bootstrap'
+
 const initialState=[
   {
     "id": '1',
@@ -96,21 +99,9 @@ const initialState=[
 
 function App() {
   const [contacts, setContacts] = useState(initialState)
-const deleteContacts=(id)=>{
-  console.log(id)
-  const updatedContacts=contacts.filter(contact=> contact.id!==id)
-  setContacts(updatedContacts)
-}
-const updateContact=(contact,id)=>{
-console.log(contact,id)
-}
-const addContacts=contact=>{
-let addToContacts={
-  id:uuidv4(),
-  ...contact,
-}
-setContacts([addToContacts,...contacts])
-}
+  
+
+
   return (
     <>
    
@@ -126,23 +117,24 @@ setContacts([addToContacts,...contacts])
       pauseOnHover
       />
       <BrowserRouter>
-      <container style={{width:'1000px',margin:'0 auto'}} >
+      <Container style={{width:'1000px',margin:'0 auto'}} >
         <Routes>
           <Route path='/' index element={<Home/>}/>
 
-          <Route path='/contacts' element={<Contacts contacts={contacts} deleteContacts={deleteContacts}/>}/>
-          <Route path='/add-contacts' element={<AddContacts addContacts={addContacts}/>}/>
+          <Route path='/contacts' element={<Contacts/>}/>
+          {/* <Route path='/add-contacts' element={<AddContacts addContacts={addContacts}/>}/> */}
           <Route path='/Register' element={<Register/>}/>
-          <Route path='/edit-contact/:id' element={<EditContact contacts={contacts}updateContact={updateContact}/>}/>
+          <Route path='/contacts/:id' element={<ContactDetails/>}/>
+          <Route path='/edit-contact/:id' element={<EditContact />}/>
           <Route path='/Login' element={<Login/>}/>
-          <Route path='/add' element={<AddContact addContacts={addContacts}/>}/>
+          <Route path='/add-contacts' element={<AddContact/>}/>
           <Route path='/*' element={<NotFound/>}/>
         
     
         </Routes>
     <Header/>
     
-    </container>
+    </Container>
     </BrowserRouter>
     
     </>

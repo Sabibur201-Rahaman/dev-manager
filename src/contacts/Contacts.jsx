@@ -1,7 +1,10 @@
 import React from 'react'
 import Contact from './Contact'
-function Contacts({contacts,deleteContacts}) {
-    console.log(contacts)
+import { ContactContext } from '../context/Contact.Context'
+
+function Contacts({deleteContacts}) {
+  const {contacts}=React.useContext(ContactContext)
+
   return (
     <div>
         <h2 className='mt-5 text-center'>All Contacts</h2>

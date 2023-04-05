@@ -1,10 +1,18 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Container } from 'react-bootstrap'
 import{Card,ListGroup,Button} from 'react-bootstrap'
 import{FaEye,FaRegTrashAlt}from 'react-icons/fa'
-function Contact({contact,deleteContacts}) {
-  console.log(contact)
-    const{first_name,last_name,profession,dob,email,picture,gender,bio}=contact
+import {toast} from 'react-toastify'
+import{Link} from 'react-router-dom'
+import { ContactContext } from '../context/Contact.Context'
+function Contact({contact}) {
+  const {deleteContacts}=useContext(ContactContext)
+    const{first_name,last_name,profession,dob,email,picture,gender,bio,id}=contact
+    const handleDelete=(id)=>{
+      toast.success('contact deleted successfully')
+      deleteContacts(id)
+
+    }
   return (
     <>
             <Card className='mb-5'>
@@ -25,8 +33,8 @@ function Contact({contact,deleteContacts}) {
                 <ListGroup.Item>Email:{email}</ListGroup.Item>
               </ListGroup>
               <div className='card-btn mt-3'>
-                <Card.Link ><Button variant='warning ms-3'size='md' type='view'><FaEye/></Button></Card.Link>
-                <Card.Link ><Button variant='danger ms-3'size='md' onClick={()=>deleteContacts(contact.id)}><FaRegTrashAlt/></Button></Card.Link>
+                <Card.Link as={Link} to={`/contacts/${id}`}><Button variant='warning ms-3'size='md' type='view'><FaEye/></Button></Card.Link>
+                <Card.Link ><Button variant='danger ms-3'size='md' onClick={()=>handleDelete(contact.id)}><FaRegTrashAlt/></Button></Card.Link>
               
               </div>
               </Card.Body>

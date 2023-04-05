@@ -1,16 +1,20 @@
-import React from 'react'
-import AddContacts from '../contacts/AddContacts'
-import {useParams} from 'react-router-dom'
+import React, { useContext } from "react";
+import AddContacts from "../contacts/AddContacts";
+import { useParams } from "react-router-dom";
+import { ContactContext } from "../context/Contact.Context";
 
-function EditContact({contacts,updateContact}) {
-    const {id}=useParams()
-    const foundContact=contacts.find((contact1)=>contact1.id===id)
+function EditContact() {
+  const { id } = useParams();
+  const { contacts } = useContext(ContactContext);
+  const foundContact = contacts.find((contact) => contact.id === id);
 
   return (
     <div>
-      <AddContacts contact1={foundContact} updateContact={updateContact}/>
+      <AddContacts contact={foundContact} />
     </div>
-  )
+  );
 }
 
-export default EditContact
+export default EditContact;
+
+//
