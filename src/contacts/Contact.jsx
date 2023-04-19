@@ -8,6 +8,7 @@ import { ContactContext } from '../context/Contact.Context'
 function Contact({contact}) {
   const {deleteContacts}=useContext(ContactContext)
     const{first_name,last_name,profession,dob,email,picture,gender,bio,id}=contact
+    // console.log(contact)
     const handleDelete=(id)=>{
       toast.success('contact deleted successfully')
       deleteContacts(id)
@@ -27,7 +28,7 @@ function Contact({contact}) {
                 </Card.Text>
               
               <ListGroup className="list-group-flush">
-                <ListGroup.Item>Date of Birth:{dob}</ListGroup.Item>
+                <ListGroup.Item>Date of Birth:{dob.toString()}</ListGroup.Item>
                 <ListGroup.Item><span className='text-dark'>Gender:{gender}</span></ListGroup.Item>
                 <ListGroup.Item>Profession:{profession}</ListGroup.Item>
                 <ListGroup.Item>Email:{email}</ListGroup.Item>

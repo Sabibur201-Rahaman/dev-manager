@@ -1,21 +1,24 @@
 import { useState,useContext } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Contacts from './contacts/Contacts'
-import Header from './layouts/Header'
-import AddContacts from './contacts/AddContacts'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
+// import './App.css'
+import Contacts from '../contacts/Contacts'
+import Header from '../layouts/Header'
+import AddContacts from '../contacts/AddContacts'
 import { ToastContainer, toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid'
 import{BrowserRouter,Routes,Route} from 'react-router-dom'
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import NotFound from './pages/NotFound'
-import EditContact from './pages/EditContact'
-import AddContact from './pages/AddContact'
-import ContactDetails from './pages/ContactDetails'
+import Home from '../pages/Home'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import NotFound from '../pages/NotFound'
+import EditContact from '../pages/EditContact'
+import AddContact from '../pages/AddContact'
+import ContactDetails from '../pages/ContactDetails'
 import { Container } from 'react-bootstrap'
+import Dashboard from '../pages/Dashboard'
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const initialState=[
   {
@@ -98,7 +101,7 @@ const initialState=[
 ]
 
 function App() {
-  const [contacts, setContacts] = useState(initialState)
+  // const [contacts, setContacts] = useState(initialState)
   
 
 
@@ -116,26 +119,52 @@ function App() {
       draggable
       pauseOnHover
       />
-      <BrowserRouter>
+     
       <Container style={{width:'1000px',margin:'0 auto'}} >
         <Routes>
           <Route path='/' index element={<Home/>}/>
-
-          <Route path='/contacts' element={<Contacts/>}/>
+          
+          <Route path='/contacts' element={
+            <PrivateRoute>
+          <Contacts/>
+          </PrivateRoute>
+          }/>
           {/* <Route path='/add-contacts' element={<AddContacts addContacts={addContacts}/>}/> */}
-          <Route path='/Register' element={<Register/>}/>
-          <Route path='/contacts/:id' element={<ContactDetails/>}/>
-          <Route path='/edit-contact/:id' element={<EditContact />}/>
-          <Route path='/Login' element={<Login/>}/>
-          <Route path='/add-contacts' element={<AddContact/>}/>
+          <Route path='/Register' element={
+          <PublicRoute>
+          <Register/>
+          </PublicRoute>
+          }/>
+          <Route path='/contacts/:id' element={
+          <PrivateRoute>
+          <ContactDetails/>
+          </PrivateRoute>
+          }/>
+          <Route path='/edit-contact/:id' element={
+          <PrivateRoute>
+          <EditContact />
+          </PrivateRoute>
+          }/>
+          <Route path='/Login' element={
+          <PublicRoute>
+          <Login/>
+          </PublicRoute>}/>
+          <Route path='/add-contacts' element={
+          <PrivateRoute>
+          <AddContact/>
+          </PrivateRoute>
+          }/>
+          <Route path='/dashboard' element={
+          <PrivateRoute>
+          <Dashboard/>
+          </PrivateRoute>
+          }/>
           <Route path='/*' element={<NotFound/>}/>
-        
-    
         </Routes>
     <Header/>
     
     </Container>
-    </BrowserRouter>
+    
     
     </>
   )

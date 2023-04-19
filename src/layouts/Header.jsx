@@ -1,7 +1,10 @@
 import React from 'react'
 import{Nav,Navbar,Button,Container,Form} from 'react-bootstrap'
 import { Link, NavLink } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../context/Auth.Context'
 function Header() {
+  const{logOut,user}=useContext(AuthContext)
   return (
     <div className='container' >
        <Navbar bg="light" expand="lg" fixed='top'>
@@ -14,12 +17,22 @@ function Header() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
+            {user&&(
+            <>
             <Nav.Link as={NavLink} to='/contacts'>Contacts</Nav.Link>
             <Nav.Link as ={NavLink} to='/add-contacts'>AddContacts</Nav.Link>
+            <Nav.Link as ={NavLink} to='/dashboard'>Dashboard</Nav.Link>
+            <Nav.Link onClick={logOut}>logout</Nav.Link>
+            
+            </>
+            )}
+            {!user&&(
+           <>
             <Nav.Link as ={NavLink} to='/Login'>Login</Nav.Link>
+            
             <Nav.Link as ={NavLink} to='/Register'>Register</Nav.Link>
-            
-            
+           </> 
+            )}
             {/* <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">

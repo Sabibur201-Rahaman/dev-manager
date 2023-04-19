@@ -9,6 +9,8 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ContactContext } from "../context/Contact.Context";
+import FormTextInput from "../layouts/FormTextInput";
+
 
 const schema = yup.object({
   first_name: yup
@@ -82,7 +84,7 @@ function AddContacts({contact}) {
     gender: contact?.gender || "male",
     dob: contact?.dob || new Date(),
   };
-  const { first_name, last_name, bio, gender, email, profession, picture } =
+  const { first_name, last_name, bio, gender, email, profession, picture,dob } =
     defaultValue;
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -98,13 +100,14 @@ function AddContacts({contact}) {
       });
     }
   }, [isSubmitSuccessful]);
-  const [birthYear, setBirthYear] = useState(new Date());
+  const [birthYear, setBirthYear] = useState(dob?dob:new Date());
+  // console.log(birthYear)
   useEffect(() => {
-    setValue("dob", "birthYear");
+    setValue("dob", birthYear);
   }, [birthYear]);
   const onSubmit = (data) => {
     Navigate('/contacts')
-console.log(data)
+// console.log(data)
     const id = contact?.id;
 console.log(id)
     if (id) {
@@ -122,7 +125,7 @@ console.log(id)
         {contact?.id ? "Edit Contact" : "Add Contacts"}
       </h2>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} className="mb-3">
+       <Form.Group as={Row} className="mb-3">
           <Col sm={3}>
             <Form.Label htmlFor="first_name" column>
               FirstName
@@ -141,7 +144,8 @@ console.log(id)
               {errors?.first_name?.message}
             </Form.Control.Feedback>
           </Col>
-        </Form.Group>
+        </Form.Group> 
+        
           <Form.Group as={Row} className="mb-3">
           <Col sm={3}>
             <Form.Label htmlFor="last_name" column>
@@ -226,7 +230,9 @@ console.log(id)
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              onChange={(date) => setBirthYear(date)}
+              onChange={(date) =>{
+                return setBirthYear(date)
+              } }
             />
           </Col>
         </Form.Group>

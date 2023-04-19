@@ -54,7 +54,7 @@ function ContactDetails() {
             <Card.Text>{bio}</Card.Text>
 
             <ListGroup className="list-group-flush">
-              <ListGroup.Item>Date of Birth:{dob}</ListGroup.Item>
+              <ListGroup.Item>Date of Birth:{dob.toString()}</ListGroup.Item>
               <ListGroup.Item>
                 <span className="text-dark">Gender:{gender}</span>
               </ListGroup.Item>

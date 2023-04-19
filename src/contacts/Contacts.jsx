@@ -2,8 +2,8 @@ import React from 'react'
 import Contact from './Contact'
 import { ContactContext } from '../context/Contact.Context'
 
-function Contacts({deleteContacts}) {
-  const {contacts}=React.useContext(ContactContext)
+function Contacts() {
+  const {contacts,deleteContacts}=React.useContext(ContactContext)
 
   return (
     <div>
