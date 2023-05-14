@@ -14,7 +14,7 @@ function ContactDetails() {
   const { id } = useParams();
   
   const foundContact = contacts.find((contact) => {
-    return contact.id === id;
+    return contact.id === +id;
   });
   useEffect(() => {
     if (id && foundContact) {

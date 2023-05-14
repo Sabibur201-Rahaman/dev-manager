@@ -9,7 +9,8 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ContactContext } from "../context/Contact.Context";
-import FormTextInput from "../layouts/FormTextInput";
+// import { ContactContext } from "../context/Contact.Context";
+// import FormTextInput from "../layouts/FormTextInput";
 
 
 const schema = yup.object({
@@ -44,7 +45,6 @@ const schema = yup.object({
 });
 function AddContacts({contact}) {
   const{contacts,updateContact,addContacts}=useContext(ContactContext)
-  const Navigate=useNavigate()
  
   // const [contact, setContact] = useState({
   //   first_name: "",
@@ -82,7 +82,7 @@ function AddContacts({contact}) {
     picture:
       contact?.picture || "https://randomuser.me/api/portraits/men/1.jpg",
     gender: contact?.gender || "male",
-    dob: contact?.dob || new Date(),
+    dob: contact?.dob && new Date(contact?.dob) || new Date(),
   };
   const { first_name, last_name, bio, gender, email, profession, picture,dob } =
     defaultValue;
@@ -101,23 +101,26 @@ function AddContacts({contact}) {
     }
   }, [isSubmitSuccessful]);
   const [birthYear, setBirthYear] = useState(dob?dob:new Date());
-  // console.log(birthYear)
   useEffect(() => {
     setValue("dob", birthYear);
   }, [birthYear]);
-  const onSubmit = (data) => {
-    Navigate('/contacts')
-// console.log(data)
+  const onSubmit = async (data) => {
     const id = contact?.id;
-console.log(id)
     if (id) {
       updateContact(data, id);
       toast.success("contact successfully Updated");
     } else {
-      toast.success("contact successfully added");
-      addContacts(data);
+      
+      const isAdded= await addContacts(data);
+      if(isAdded){
+        toast.success("contact successfully added");
+        navigate("/contacts");
+      }else{
+        toast.error('contact add failed')
+      }
+      
     }
-    navigate("/contacts");
+    // navigate("/contacts");
   };
   return (
     <div>
@@ -183,9 +186,9 @@ console.log(id)
                 {" "}
                 select your profession
               </option>
-              <option value="Developer">developer</option>
-              <option value="Designer">designer</option>
-              <option value="Marketer">marketer</option>
+              <option value="developer">developer</option>
+              <option value="designer">designer</option>
+              <option value="marketer">marketer</option>
             </Form.Select>
             <Form.Control.Feedback type="invalid" className="d-block">
               {errors?.profession?.message}

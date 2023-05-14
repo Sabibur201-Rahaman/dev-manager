@@ -35,7 +35,6 @@ function Register() {
   })
   const {registerUser}=useContext(AuthContext)
   const onSubmit=(data)=>{
-    console.log(data)
     registerUser({
       username:data.username,
       email:data.email,
